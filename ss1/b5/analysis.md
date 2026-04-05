@@ -6,7 +6,7 @@ Session1/
 └── src/
     └── main/
         ├── java/
-        │   └── atmin.b5/
+        │   └── org.b5/
         │       ├── config/
         │       │   └── AppConfig.java      (File cấu hình quét Bean)
         │       ├── model/
