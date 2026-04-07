@@ -1,4 +1,4 @@
-package org.example.session02.Bai4;
+package org.example.ss2.Bai4;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

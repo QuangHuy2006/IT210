@@ -1,4 +1,4 @@
-package org.example.session02.Bai5;
+package org.example.ss2.Bai5;
 
 import java.util.Date;
 

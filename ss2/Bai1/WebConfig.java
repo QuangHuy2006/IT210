@@ -1,4 +1,4 @@
-package org.example.session02.Bai1;
+package org.example.ss2.Bai1;
 
 
 import org.springframework.context.annotation.Bean;
@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "org.example.session02")
+@ComponentScan(basePackages = "org.example.ss2")
 public class WebConfig {
 
     @Bean

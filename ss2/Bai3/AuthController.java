@@ -1,4 +1,4 @@
-package org.example.session02.Bai3;
+package org.example.ss2.Bai3;
 
 
 import jakarta.servlet.http.HttpServletRequest;

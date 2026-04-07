@@ -1,4 +1,4 @@
-package org.example.session02.Bai4;
+package org.example.ss2.Bai4;
 
 public class Event {
     private int id;

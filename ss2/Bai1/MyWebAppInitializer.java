@@ -1,4 +1,4 @@
-package org.example.session02.Bai1;
+package org.example.ss2.Bai1;
 
 import org.jspecify.annotations.Nullable;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
