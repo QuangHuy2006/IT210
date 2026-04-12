@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Chỉnh sửa món ăn</title>
+  <style>
+    .form-group { margin-bottom: 15px; }
+    label { display: inline-block; width: 100px; }
+  </style>
+</head>
+<body>
+<div layout:fragment="content">
+  <h2>HIỆU CHỈNH MÓN ĂN</h2>
+  <hr>
+
+  <form th:action="@{/bai3/update}" th:object="${dish}" method="post">
+
+    <input type="hidden" th:field="*{id}" />
+
+    <div class="form-group">
+      <label>Tên món:</label>
+      <input type="text" th:field="*{name}" placeholder="Nhập tên món ăn" />
+    </div>
+
+    <div class="form-group">
+      <label>Giá tiền:</label>
+      <input type="number" th:field="*{price}" />
+    </div>
+
+    <div class="form-group">
+      <label>Trạng thái:</label>
+      <select th:field="*{available}">
+        <option th:value="true">Còn hàng</option>
+        <option th:value="false">Hết hàng</option>
+      </select>
+    </div>
+
+    <button type="submit">Lưu thay đổi</button>
+    <a th:href="@{/bai3/dishes}">Hủy bỏ</a>
+  </form>
+</div>
+
+</body>
+</html>

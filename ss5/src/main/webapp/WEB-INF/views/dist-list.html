@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div >
+  <h2>DANH SÁCH THỰC ĐƠN</h2>
+
+  <div th:if="${#lists.isEmpty(dishes)}">
+    <p><i>Hiện tại nhà hàng đang cập nhật thực đơn, vui lòng quay lại sau.</i></p>
+  </div>
+
+  <table th:unless="${#lists.isEmpty(dishes)}">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tên món</th>
+      <th>Giá (VNĐ)</th>
+      <th>Trạng thái</th>
+      <th>Hành động</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="dish : ${dishes}">
+      <td th:text="${dish.id}">1</td>
+      <td th:text="${dish.name}"
+          th:classappend="${!dish.isAvailable} ? 'out-of-stock' : ''">Tên món</td>
+      <td th:text="${#numbers.formatDecimal(dish.price, 0, 'COMMA', 0, 'POINT')}">0</td>
+      <td>
+        <span th:if="${dish.isAvailable}" class="in-stock">Còn hàng</span>
+        <span th:unless="${dish.isAvailable}" class="out-of-stock">Hết hàng</span>
+      </td>
+      <p th:if="${error}" style="color: red; font-weight: bold;" th:text="${error}"></p>
+
+      <td>
+        <a th:href="@{|/bai3/edit/${dish.id}|}">Chỉnh sửa</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+</body>
+</html>

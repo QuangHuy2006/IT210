@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <meta charset="UTF-8">
+  <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Nhà Hàng Của Bạn</title>
+  <style>
+    header { background: #333; color: white; padding: 1rem; text-align: center; }
+    footer { background: #f4f4f4; padding: 1rem; text-align: center; position: fixed; bottom: 0; width: 100%; }
+    main { padding: 20px; margin-bottom: 60px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>LOGO NHÀ HÀNG - HỆ THỐNG QUẢN LÝ</h1>
+  <nav>
+    <a th:href="@{/bai2/dishes}" style="color: white;">Trang chủ</a> |
+    <a th:href="@{/bai3/dishes}" style="color: white;">Quản trị</a>
+  </nav>
+</header>
+
+<main layout:fragment="content">
+</main>
+
+<footer>
+  <p>&copy; 2026 - Liên hệ: 0123-456-789 | Email: contact@restaurant.com</p>
+</footer>
+
+</body>
+</html>

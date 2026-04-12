@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{main-layout}">
+<head>
+  <title>Đặt món nhanh</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <h2>ĐẶT MÓN NHANH</h2>
+
+  <table border="1">
+    <thead>
+    <tr>
+      <th>Sản phẩm</th>
+      <th>Giá đơn vị</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${menuItems}">
+      <td th:text="${item.name}">Món ăn mẫu (Designer nhìn)</td>
+      <td th:text="${#numbers.formatDecimal(item.price, 0, 'COMMA', 0, 'POINT')}">99,999</td>
+    </tr>
+    <tr th:remove="all">
+      <td>Món ăn mẫu 2</td>
+      <td>88,888</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: 20px; background: #eee; padding: 10px;">
+    <p>Tạm tính: <span th:text="${subTotal}">0</span> VNĐ</p>
+    <p>Thuế VAT (10%): <span th:text="${tax}">0</span> VNĐ</p>
+    <hr>
+    <h3>TỔNG CỘNG: <span th:text="${total}">0</span> VNĐ</h3>
+  </div>
+</div>
+</body>
+</html>
