@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard 3D | Danh sách tài khoản</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 30%, #0b1120, #020408);
+            min-height: 100vh;
+            padding: 2rem;
+            perspective: 800px;
+        }
+
+        /* 3D Navbar */
+        .navbar-3d {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 20, 35, 0.7);
+            backdrop-filter: blur(12px);
+            padding: 1rem 2rem;
+            border-radius: 80px;
+            margin-bottom: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.4);
+            transform: translateZ(20px);
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(120deg, #fff, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: rgba(255,255,255,0.05);
+            padding: 6px 18px;
+            border-radius: 60px;
+        }
+
+        .logout-btn {
+            background: rgba(220, 60, 60, 0.8);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .logout-btn:hover {
+            background: #dc2626;
+            transform: scale(1.02);
+            box-shadow: 0 0 12px #ff4d4d;
+        }
+
+        /* Grid 3D cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        .card-3d {
+            background: rgba(20, 30, 55, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-3d:hover {
+            transform: translateY(-12px) rotateX(4deg) rotateY(2deg);
+            background: rgba(35, 55, 95, 0.7);
+            box-shadow: 0 35px 45px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(72, 187, 255, 0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+            padding-bottom: 15px;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(145deg, #3b82f6, #1e3a8a);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .name {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .username {
+            color: #b9d0ff;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 6px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            color: #cbd5ff;
+            padding: 6px 0;
+        }
+
+        .badge {
+            background: rgba(59,130,246,0.3);
+            border-radius: 40px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #fff, #94a3f8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .welcome {
+            color: #a0b3e0;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar-3d">
+    <div class="logo"><i class="fas fa-cube"></i> 3D AccountHub</div>
+    <div class="user-info">
+        <i class="fas fa-user-astronaut"></i>
+        <span id="welcomeUser">User</span>
+        <button class="logout-btn" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+    </div>
+</div>
+
+<div style="max-width: 1300px; margin: 0 auto;">
+    <h1><i class="fas fa-users"></i> Danh sách tài khoản</h1>
+    <div class="welcome"><i class="fas fa-globe"></i> Hệ thống 3D | Tổng số: <span id="totalAccounts">0</span> người dùng</div>
+</div>
+
+<div class="cards-container" id="accountsList">
+    <!-- JS sẽ render danh sách 3D cards -->
+</div>
+
+<script>
+    // Dữ liệu tài khoản (giống backend)
+    const accountsData = [
+        { id: 1, fullName: "Nguyen Van A", username: "nguyenvana", password: "123456" },
+        { id: 2, fullName: "Tran Thi B", username: "tranthib", password: "654321" },
+        { id: 3, fullName: "Le Van C", username: "levanc", password: "abcdef" }
+    ];
+
+    // Lấy thông tin user đã login từ localStorage (do home-login.html lưu)
+    let loggedUser = null;
+    try {
+        const stored = localStorage.getItem('loggedUser');
+        if (stored) {
+            loggedUser = JSON.parse(stored);
+        }
+    } catch(e) { console.warn(e); }
+
+    const welcomeSpan = document.getElementById('welcomeUser');
+    if (loggedUser && loggedUser.fullName) {
+        welcomeSpan.innerText = loggedUser.fullName;
+    } else {
+        welcomeSpan.innerText = "Khách";
+    }
+
+    // Render danh sách accounts
+    const container = document.getElementById('accountsList');
+    const totalSpan = document.getElementById('totalAccounts');
+    totalSpan.innerText = accountsData.length;
+
+    function renderCards() {
+        container.innerHTML = '';
+        accountsData.forEach(acc => {
+            const card = document.createElement('div');
+            card.className = 'card-3d';
+            // Lấy chữ cái đầu cho avatar
+            const initial = acc.fullName.charAt(0).toUpperCase();
+            card.innerHTML = `
+                <div class="card-header">
+                    <div class="avatar">${initial}</div>
+                    <div>
+                        <div class="name">${escapeHtml(acc.fullName)}</div>
+                        <div class="username"><i class="fas fa-at"></i> ${escapeHtml(acc.username)}</div>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <span><i class="fas fa-id-card"></i> ID</span>
+                    <span class="badge">#${acc.id}</span>
+                </div>
+                <div class="detail-row">
+                    <span><i class="fas fa-lock"></i> Mật khẩu</span>
+                    <span class="badge">••••••</span>
+                </div>
+                <div class="detail-row">
+                    <span><i class="fas fa-calendar"></i> Trạng thái</span>
+                    <span class="badge"><i class="fas fa-circle" style="color:#2ecc71; font-size: 0.6rem;"></i> Hoạt động</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function escapeHtml(str) {
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    renderCards();
+
+    // Đăng xuất: xóa sessionStorage và chuyển về login
+    const logoutBtn = document.getElementById('logoutBtn');
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('loggedUser');
+        window.location.href = "/login";
+    });
+
+    // Nếu chưa đăng nhập, chuyển hướng về login (bảo vệ)
+    if (!loggedUser) {
+        // Chuyển hướng sau 0.5s nếu chưa login
+        setTimeout(() => {
+            if (!localStorage.getItem('loggedUser')) {
+                window.location.href = "/login";
+            }
+        }, 500);
+    }
+</script>
+</body>
+</html>

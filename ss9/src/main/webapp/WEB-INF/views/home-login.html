@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Đăng nhập / Đăng ký 3D</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 30%, #0a0f1e, #03050b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px;
+      overflow-x: hidden;
+    }
+
+    /* 3D background elements */
+    .bg-3d {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .cube {
+      position: absolute;
+      width: 250px;
+      height: 250px;
+      background: rgba(255, 255, 255, 0.03);
+      transform: rotateX(45deg) rotateZ(45deg);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 32px;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .cube:nth-child(1) { top: 10%; left: -5%; width: 300px; height: 300px; animation-delay: 0s; }
+    .cube:nth-child(2) { bottom: -10%; right: -5%; width: 400px; height: 400px; animation-delay: -5s; }
+    .cube:nth-child(3) { top: 40%; right: 20%; width: 180px; height: 180px; animation-delay: -10s; }
+
+    @keyframes float {
+      0% { transform: rotateX(45deg) rotateZ(45deg) translateY(0px) translateX(0px); }
+      50% { transform: rotateX(45deg) rotateZ(45deg) translateY(30px) translateX(20px); }
+      100% { transform: rotateX(45deg) rotateZ(45deg) translateY(0px) translateX(0px); }
+    }
+
+    /* 3D Card Container */
+    .card-3d {
+      position: relative;
+      z-index: 10;
+      width: 480px;
+      max-width: 90%;
+      background: rgba(15, 25, 45, 0.65);
+      backdrop-filter: blur(16px);
+      border-radius: 48px;
+      padding: 2rem 1.8rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-3d:hover {
+      transform: translateY(-8px) rotateX(2deg) rotateY(1deg);
+      box-shadow: 0 40px 60px rgba(0, 0, 0, 0.6), 0 0 0 2px rgba(255, 255, 255, 0.2);
+    }
+
+    /* Tabs 3D */
+    .tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-bottom: 0.5rem;
+    }
+
+    .tab-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.4rem;
+      font-weight: 600;
+      padding: 0.5rem 1.2rem;
+      cursor: pointer;
+      color: #b0c4ff;
+      transition: 0.2s;
+      border-radius: 40px;
+      letter-spacing: 1px;
+      backdrop-filter: blur(4px);
+    }
+
+    .tab-btn.active {
+      color: white;
+      background: rgba(72, 187, 255, 0.25);
+      box-shadow: 0 5px 15px rgba(0, 160, 255, 0.3);
+      text-shadow: 0 0 5px rgba(0, 160, 255, 0.5);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .form-group i {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #8aa9ff;
+      font-size: 1.1rem;
+      z-index: 2;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 20px 14px 48px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 60px;
+      font-size: 1rem;
+      color: white;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+      backdrop-filter: blur(4px);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #3b82f6;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-3d {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #3b82f6, #1e40af);
+      border: none;
+      border-radius: 60px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+      transform: translateY(0);
+    }
+
+    .btn-3d:active {
+      transform: translateY(3px);
+      box-shadow: 0 5px 10px -3px rgba(0, 0, 0, 0.5);
+    }
+
+    .error-msg {
+      background: rgba(255, 80, 80, 0.2);
+      border-left: 4px solid #ff4d4d;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      margin-top: 12px;
+      color: #ffb3b3;
+    }
+
+    .success-msg {
+      background: rgba(80, 255, 120, 0.2);
+      border-left: 4px solid #4cff8f;
+      color: #b3ffcf;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #fff, #8bb9ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .sub {
+      color: #9ab3e0;
+      margin-bottom: 1.8rem;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+<div class="bg-3d">
+  <div class="cube"></div>
+  <div class="cube"></div>
+  <div class="cube"></div>
+</div>
+
+<div class="card-3d" id="mainCard">
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="login">🔐 ĐĂNG NHẬP</button>
+    <button class="tab-btn" data-tab="register">✨ ĐĂNG KÝ</button>
+  </div>
+
+  <!-- FORM ĐĂNG NHẬP (khớp với @ModelAttribute "dataLogin" của Spring) -->
+  <div id="loginForm">
+    <h2>Chào mừng trở lại</h2>
+    <div class="sub">Nhập thông tin tài khoản</div>
+    <form id="loginFormElem" action="/login" method="POST">
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" name="username" placeholder="Tên đăng nhập" required>
+      </div>
+      <div class="form-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" name="password" placeholder="Mật khẩu" required>
+      </div>
+      <button type="submit" class="btn-3d"><i class="fas fa-arrow-right-to-bracket"></i> Đăng nhập</button>
+      <div id="loginError" class="error-msg hidden"></div>
+    </form>
+  </div>
+
+  <!-- FORM ĐĂNG KÝ (demo 3D, có thể thêm vào controller thật) -->
+  <div id="registerForm" class="hidden">
+    <h2>Tạo tài khoản mới</h2>
+    <div class="sub">Nhập thông tin đăng ký</div>
+    <form id="registerFormElem">
+      <div class="form-group">
+        <i class="fas fa-id-card"></i>
+        <input type="text" id="fullname" placeholder="Họ và tên" required>
+      </div>
+      <div class="form-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="regUsername" placeholder="Tên đăng nhập" required>
+      </div>
+      <div class="form-group">
+        <i class="fas fa-key"></i>
+        <input type="password" id="regPassword" placeholder="Mật khẩu" required>
+      </div>
+      <button type="submit" class="btn-3d"><i class="fas fa-user-plus"></i> Đăng ký ngay</button>
+      <div id="regMsg" class="error-msg hidden"></div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Danh sách tài khoản mẫu (giống backend)
+  const mockAccounts = [
+    { id: 1, fullName: "Nguyen Van A", username: "nguyenvana", password: "123456" },
+    { id: 2, fullName: "Tran Thi B", username: "tranthib", password: "654321" },
+    { id: 3, fullName: "Le Van C", username: "levanc", password: "abcdef" }
+  ];
+
+  // Tab chuyển đổi
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const loginDiv = document.getElementById('loginForm');
+  const registerDiv = document.getElementById('registerForm');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (btn.dataset.tab === 'login') {
+        loginDiv.classList.remove('hidden');
+        registerDiv.classList.add('hidden');
+      } else {
+        loginDiv.classList.add('hidden');
+        registerDiv.classList.remove('hidden');
+      }
+    });
+  });
+
+  // XỬ LÝ ĐĂNG NHẬP (chuyển sang home.html với dữ liệu)
+  const loginForm = document.getElementById('loginFormElem');
+  const loginErrorDiv = document.getElementById('loginError');
+
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const username = loginForm.querySelector('input[name="username"]').value.trim();
+    const password = loginForm.querySelector('input[name="password"]').value.trim();
+
+    const found = mockAccounts.find(acc => acc.username === username && acc.password === password);
+    if (found) {
+      // Lưu thông tin user vào localStorage để home.html hiển thị
+      localStorage.setItem('loggedUser', JSON.stringify({ id: found.id, fullName: found.fullName, username: found.username }));
+      // Chuyển hướng tới home.html (đã tạo)
+      window.location.href = "home.html";
+    } else {
+      loginErrorDiv.innerText = "❌ Sai tài khoản hoặc mật khẩu";
+      loginErrorDiv.classList.remove('hidden');
+      setTimeout(() => loginErrorDiv.classList.add('hidden'), 3000);
+    }
+  });
+
+  // ĐĂNG KÝ (chỉ demo front-end, thêm user mới)
+  const regForm = document.getElementById('registerFormElem');
+  const regMsgDiv = document.getElementById('regMsg');
+
+  regForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const fullname = document.getElementById('fullname').value.trim();
+    const username = document.getElementById('regUsername').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+
+    if (!fullname || !username || !password) {
+      showRegMsg("Vui lòng nhập đầy đủ thông tin!", false);
+      return;
+    }
+    if (mockAccounts.some(acc => acc.username === username)) {
+      showRegMsg("Tên đăng nhập đã tồn tại!", false);
+      return;
+    }
+    // Thêm mới (demo)
+    const newId = mockAccounts.length + 1;
+    mockAccounts.push({ id: newId, fullName: fullname, username, password });
+    showRegMsg("✅ Đăng ký thành công! Hãy đăng nhập.", true);
+    regForm.reset();
+    // Tự động chuyển sang tab login sau 1.5s
+    setTimeout(() => {
+      tabBtns[0].click();
+    }, 1500);
+  });
+
+  function showRegMsg(msg, isSuccess) {
+    regMsgDiv.innerText = msg;
+    regMsgDiv.classList.remove('hidden', 'success-msg', 'error-msg');
+    regMsgDiv.classList.add(isSuccess ? 'success-msg' : 'error-msg');
+    setTimeout(() => regMsgDiv.classList.add('hidden'), 2500);
+  }
+</script>
+</body>
+</html>
