@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Danh sách đơn thuốc</title></head>
+<body>
+<h1>Danh sách đơn thuốc</h1>
+<table>
+  <tr><th>ID</th><th>Bệnh nhân</th><th>Chi tiết</th></tr>
+  <tr th:each="p : ${prescriptions}">
+    <td th:text="${p.id}"></td>
+    <td th:text="${p.patientName}"></td>
+    <td>
+      <ul>
+        <li th:each="d : ${p.details}" th:text="${d.name} + ' - ' + ${d.quantity}"></li>
+      </ul>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
