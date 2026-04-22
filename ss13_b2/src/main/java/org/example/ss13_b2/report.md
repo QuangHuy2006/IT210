@@ -1,0 +1,2 @@
+Tại sao Hibernate bắt buộc phải có @Id?  
+Trong ORM, mỗi entity phải có một khóa chính để Hibernate biết cách nhận diện duy nhất từng bản ghi trong bảng. Annotation @Id đánh dấu trường nào là khóa chính. Nếu thiếu @Id, Hibernate sẽ báo lỗi khi khởi tạo vì không thể ánh xạ entity sang bảng, cũng không thể thực hiện các thao tác CRUD (insert, update, delete, find) một cách chính xác.
