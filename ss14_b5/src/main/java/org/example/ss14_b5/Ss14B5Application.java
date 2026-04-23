@@ -1,0 +1,13 @@
+package org.example.ss14_b5;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Ss14B5Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Ss14B5Application.class, args);
+    }
+
+}
